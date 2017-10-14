@@ -7,6 +7,12 @@ var test = speedTest({maxTime: 5000});
 
 var client = new Twitter(config);
 
+var now = new Date();
+var days = ['Sunday','Monday', 'Tuesday','Wednesday','Tursday','Friday','Saturday'];
+var day = days[now.getDay()];
+var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+var month = months[now.getMonth()];
+
 
 function testConsole(){
   console.log(ls.success, chalk.green('Success!'));
@@ -17,21 +23,38 @@ function testConsole(){
 
 function testSpeed(){
   speedTest.visual({maxTime: 10000}, (err, data)=> {
-    console.dir(`${data.speeds.download} Mbps`);
-    console.dir(`${data.speeds.upload} Mbps`);
+    if (err) {
+      console.log(ls.error, chalk.red(err));
+    }
+    console.log(ls.success, chalk.green('TEST COMPLETE'));
+    console.log(ls.info, `DOWNLOAD: ${data.speeds.download} Mbps`);
+    console.log(ls.info, `  UPLOAD: ${data.speeds.upload} Mbps`);
+    //download speed threshold
+    if (data.speeds.download < 20) {
+      console.log(ls.warning, chalk.yellow('Download speeds below threshold! \n'));
+      whine(data.speeds.download);
+    } else {
+      console.log(ls.success, chalk.green('Download speeds are acceptable!'));
+      console.log(ls.info, chalk.blue(`${day} ${now.getDate()} ${month} ${now.getFullYear()} ${now.getHours()}:${now.getMinutes()}`));
+    }
   })
 }
 
-function whine(){
-  client.post('statuses/update', {status: 'testing no.6'})
+function whine(dl){
+  var message = `Download speed tested at ${dl} Mbps`;
+
+  client.post('statuses/update', {status: message})
   .then(function (tweet) {
-    console.log(chalk.bgRed.yellow(tweet.created_at));
+    console.log(ls.info, chalk.blue('------------------------------------------'));
+    console.log(ls.info, chalk.blue(`Tweeted at ${day} ${now.getDate()} ${month} ${now.getFullYear()} ${now.getHours()}:${now.getMinutes()}`));
+    console.log(ls.info, chalk.white(message));
+    console.log(ls.info, chalk.blue('------------------------------------------'));
   })
   .then(function(){
     process.exit(0);
   })
   .catch(function (error) {
-    throw error;
+    console.log(ls.error, chalk.red(error));
   })
 }
 
