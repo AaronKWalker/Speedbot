@@ -23,7 +23,7 @@ function testConsole(){
 function testSpeed(){
   day = days[now.getDay()];
   month = months[now.getMonth()];
-  speedTest.visual({maxTime: 5000}, (err, data)=> {
+  speedTest.visual({maxTime: 30000}, (err, data)=> {
     if (err) {
       console.log(ls.error, chalk.red(err));
     }
@@ -31,7 +31,7 @@ function testSpeed(){
     console.log(ls.info, `DOWNLOAD: ${data.speeds.download} Mbps`);
     console.log(ls.info, `  UPLOAD: ${data.speeds.upload} Mbps`);
     //download speed threshold///////////////////////////
-    if (data.speeds.download < 100000) {
+    if (data.speeds.download < 300) {
       console.log(ls.warning, chalk.yellow('Download speeds below threshold! \n'));
       whine(data.speeds.download, data.speeds.upload);
     } else {
@@ -59,5 +59,4 @@ function whine(dl, ul){
   })
 }
 
-//setInterval(testSpeed, 3600000);
-testSpeed();
+setInterval(testSpeed, 3600000);
