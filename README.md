@@ -6,3 +6,4 @@
 
 ### When the internet speed is **below** the minimum threshold
 ![gif](./images/speedBelowPar.gif)
+![screenshot](./images/twitterScreenshot.png)
