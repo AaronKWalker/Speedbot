@@ -30,10 +30,10 @@ function testSpeed(){
     console.log(ls.success, chalk.green('TEST COMPLETE'));
     console.log(ls.info, `DOWNLOAD: ${data.speeds.download} Mbps`);
     console.log(ls.info, `  UPLOAD: ${data.speeds.upload} Mbps`);
-    //download speed threshold
-    if (data.speeds.download < 10) {
+    //download speed threshold///////////////////////////
+    if (data.speeds.download < 100000) {
       console.log(ls.warning, chalk.yellow('Download speeds below threshold! \n'));
-      whine(data.speeds.download);
+      whine(data.speeds.download, data.speeds.upload);
     } else {
       console.log(ls.success, chalk.green('Download speeds are acceptable!'));
       console.log(ls.info, chalk.blue(`${day} ${now.getDate()} ${month} ${now.getFullYear()} ${now.getHours()}:${now.getMinutes()}`));
@@ -41,8 +41,8 @@ function testSpeed(){
   })
 }
 
-function whine(dl){
-  var message = `Download speed tested at ${dl} Mbps`;
+function whine(dl, ul){
+  var message = `Hey @ATT why is my internet speed ${dl}dn/${ul}up when I pay for Fiber? @ATTCares #ATT #speedtest #cedarparktowncenter #Ethernetport`;
 
   client.post('statuses/update', {status: message})
   .then(function (tweet) {
