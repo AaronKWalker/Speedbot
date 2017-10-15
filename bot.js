@@ -47,7 +47,7 @@ function whine(dl){
   client.post('statuses/update', {status: message})
   .then(function (tweet) {
     console.log(ls.info, chalk.blue('------------------------------------------'));
-    console.log(ls.info, chalk.blue(`Tweeted at ${day} ${now.getDate()} ${month} ${now.getFullYear()} ${now.getHours()}:${now.getMinutes()}`));
+    console.log(ls.info, chalk.blue(`Tweeted on ${day} ${now.getDate()} ${month} ${now.getFullYear()} ${now.getHours()}:${now.getMinutes()}`));
     console.log(ls.info, chalk.white(message));
     console.log(ls.info, chalk.blue('------------------------------------------'));
   })
