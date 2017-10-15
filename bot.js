@@ -9,9 +9,8 @@ var client = new Twitter(config);
 
 var now = new Date();
 var days = ['Sunday','Monday', 'Tuesday','Wednesday','Tursday','Friday','Saturday'];
-var day = days[now.getDay()];
+var day, month;
 var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-var month = months[now.getMonth()];
 
 
 function testConsole(){
@@ -22,6 +21,8 @@ function testConsole(){
 }
 
 function testSpeed(){
+  day = days[now.getDay()];
+  month = months[now.getMonth()];
   speedTest.visual({maxTime: 10000}, (err, data)=> {
     if (err) {
       console.log(ls.error, chalk.red(err));
@@ -51,11 +52,11 @@ function whine(dl){
     console.log(ls.info, chalk.blue('------------------------------------------'));
   })
   .then(function(){
-    process.exit(0);
+    //process.exit(0);
   })
   .catch(function (error) {
     console.log(ls.error, chalk.red(error));
   })
 }
 
-testSpeed();
+setInterval(testSpeed, 3600000);
