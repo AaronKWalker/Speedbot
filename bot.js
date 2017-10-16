@@ -7,7 +7,6 @@ var test = speedTest({maxTime: 5000});
 
 var client = new Twitter(config);
 
-var now = new Date();
 var days = ['Sunday','Monday', 'Tuesday','Wednesday','Tursday','Friday','Saturday'];
 var day, month;
 var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -21,6 +20,7 @@ function testConsole(){
 }
 
 function testSpeed(){
+  var now = new Date();
   day = days[now.getDay()];
   month = months[now.getMonth()];
   speedTest.visual({maxTime: 30000}, (err, data)=> {
