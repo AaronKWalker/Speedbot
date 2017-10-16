@@ -33,7 +33,7 @@ function testSpeed(){
     //download speed threshold///////////////////////////
     if (data.speeds.download < 300) {
       console.log(ls.warning, chalk.yellow('Download speeds below threshold! \n'));
-      whine(data.speeds.download, data.speeds.upload);
+      whine(data.speeds.download, data.speeds.upload, now);
     } else {
       console.log(ls.success, chalk.green('Download speeds are acceptable!'));
       console.log(ls.info, chalk.blue(`${day} ${now.getDate()} ${month} ${now.getFullYear()} ${now.getHours()}:${now.getMinutes()}`));
@@ -41,16 +41,16 @@ function testSpeed(){
   })
 }
 
-function whine(dl, ul){
+function whine(dl, ul, now){
   var message = `Hey @ATT why is my internet speed ${dl}dn/${ul}up when I pay for Fiber? @ATTCares #ATT #speedtest #cedarparktowncenter #Ethernetport`;
 
   client.post('statuses/update', {status: message})
   .then(function (tweet) {
     console.log(ls.info, chalk.blue('------------------------------------------'));
-    //console.log(ls.info, chalk.blue(`Tweeted on ${day} ${now.getDate()} ${month} ${now.getFullYear()} ${now.getHours()}:${now.getMinutes()}`));
-    console.log(ls.info, chalk.blue(tweet.created_at));
+    console.log(ls.info, chalk.blue(`Tweeted on ${day} ${now.getDate()} ${month} ${now.getFullYear()} ${now.getHours()}:${now.getMinutes()}`));
     console.log(ls.info, chalk.white(message));
-    console.log(ls.info, chalk.blue('------------------------------------------'));
+    console.log(ls.info, chalk.blue(tweet.created_at));
+    console.log(ls.info, chalk.blue('------------------------------------------ \n'));
   })
   .then(function(){
     //process.exit(0);
@@ -60,4 +60,11 @@ function whine(dl, ul){
   })
 }
 
-setInterval(testSpeed, 3600000);
+function begin(){
+  var time = new Date();
+  console.log(ls.warning, chalk.yellow('=========================================================='));
+  console.log(ls.warning, chalk.yellow(`Speedbot initiated. ${time.getMonth() + 1}/${time.getDate()}/${time.getFullYear()} ${time.getHours()}:${time.getMinutes()} \n`));
+  setInterval(testSpeed, 3600000);
+}
+
+begin();
